@@ -1,0 +1,19 @@
+{
+  "name": "frontend-test-master",
+  "version": "1.0.0",
+  "description": "front-end challenge",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://pdemutti@bitbucket.org/pdemutti/frontend-test-master.git"
+  },
+  "author": "Paulo Demutti",
+  "license": "ISC",
+  "homepage": "https://bitbucket.org/pdemutti/frontend-test-master#readme",
+  "dependencies": {
+    "express": "^4.15.3"
+  }
+}
