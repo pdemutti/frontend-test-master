@@ -1,10 +1,19 @@
 body {
-  font-family: sans-serif;
+  font-family: "Lato","Arial",sans-serif;
+  background-color: #fff;
+  margin: 0;
 }
-
-
+header, nav {
+  background-color: #f9f9f9;
+}
 .brand {
   height: 46px;
+  display: flex;
+  margin-right: auto;
+  margin-left: auto;
+  /*padding-right: 20%;*/
+  padding-left: 20%;
+  width: 100%;
 }
 .brand .estetica {
   display: inline-block;
@@ -29,37 +38,46 @@ h1 {
    text-transform: uppercase;
  }
 nav {
+  padding: 24px;
 
 }
 
 .big-banner {
   display: flex;
-  flex-direction: row
+  justify-content: space-around;
+  align-items: center;
 }
 .big-banner .big-banner-text {
-  margin: auto;
+  margin:0 auto 0 20%;
   order: 1;
 }
 .big-banner .big-banner-text p {
   color:#536e7b;
   font-size: 48px;
+  font-weight: 700;
+  margin-bottom: 0;
+  padding-left: 40px;
 }
 .big-banner .big-banner-text span {
   font-size: 30px;
   color: rgba(51,51,51,0.6);
+  padding-left: 40px;
 }
 .big-banner .big-banner-img {
-  margin: auto;
+  margin: 0 auto;
   order: 2;
 }
 .order {
   display: flex;
   margin-right: auto;
   margin-left: auto;
-  padding-right: 1.25%;
-  padding-left: 1.25%;
   flex-wrap: wrap;
   width: 582px;
+  margin: -120px auto;
+  z-index: 4;
+  border-radius: 7px;
+  border: 1px solid rgba(51,51,51,0.15);
+  background-color: #fff;
 }
 .order h2 {
   color: #1393f6;
@@ -69,12 +87,91 @@ nav {
   border-bottom: 2px solid rgba(19,147,246,0.2);
   text-align: center;
 }
+.order button {
+  background-color: #1393f6;
+  color: #fff;
+  padding: 16px 32px;
+  font-size: 14px;
+  border-radius: 6px;
+  font-weight: 400;
+  text-align: center;
+  border: 0;
+  letter-spacing: .3px;
+  text-transform: uppercase;
+  cursor: pointer;
+  width: 100%;
+}
 h2 small {
   display: block;
   font-style: italic;
   font-weight: 400;
   font-size: 16px;
 }
-ul li {
+ul {
   list-style: none;
+}
+#form-content {
+  width: 100%;
+  margin: 14px 10%;
+  padding: 15px 0;
+}
+ul.request-list {
+  margin: 0;
+  padding: 0;
+  position: relative;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+ul.request-list li.item {
+  padding-bottom: 8px;
+}
+label.name {
+  display: inline-block;
+  margin-bottom: 6px;
+  color: rgba(51,51,51,0.9);
+  font-size: 15px;
+  font-weight: 700;
+}
+li input[type='checkbox'] {
+  transform: scale(1.5);
+}
+li label{
+  color: rgba(51,51,51,0.6);
+  margin-left: 11px;
+}
+
+select, textarea{
+  background-color: #eff4fa;
+  width: 100%;
+  border: solid 1px #1393F6;
+}
+select {
+  height: 45px;
+}
+textarea {
+  height: 60px;
+  border-radius: 5px;
+  padding: 0;
+  margin-bottom: 30px;
+}
+.breadcrumb {
+  display: flex;
+  flex-direction: row;
+  margin: 0 auto;
+  width: 100%;
+}
+.breadcrumb li {
+  flex: 1;
+  padding: 14px;
+  font-size: 12px;
+  text-align: center;
+  line-height: 1;
+  border-bottom-left-radius: 6px;
+  border-bottom-right-radius: 6px;
+  background: #E7E7E7;
+  color: #9daab1;
+}
+.breadcrumb li.active {
+  background: #fff;
+  color: #536e7b;
 }

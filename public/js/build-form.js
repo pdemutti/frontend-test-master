@@ -5,10 +5,6 @@ App.buildForm = (function ($, win, doc) {
 
     function setup () {
       getData('/schema-json', success);
-      // getData('/schema-json', function(data){
-      //   var result = JSON.parse(data);
-      //   console.log(result._embedded.request_fields)
-      // });
     }
     function live(selector, event, callback, context) {
       addEvent(context || document, event, function(e) {
@@ -32,14 +28,13 @@ App.buildForm = (function ($, win, doc) {
       return xhr;
     }
     function success (data){
+      var targetEl = doc.getElementById('form-content');
       var result = JSON.parse(data);
-        console.log(result._embedded.request_fields)
-      buildRequestFields(result._embedded.request_fields);
+      buildRequestFields(result._embedded.request_fields, targetEl);
+      buildUserFields(result._embedded.user_fields, targetEl);
 
     }
-    function buildRequestFields(res) {
-        var el = doc.getElementById('form-content');
-
+    function buildRequestFields(res, targetEl) {
         var html = "<div class='request-fields-list'>";
 
         for (var key in res) {
@@ -52,9 +47,12 @@ App.buildForm = (function ($, win, doc) {
                 html += "<li class='item'><input type='checkbox' name='"+res[key].name+"' id='Qual será o serviço?-0' value='"+objVal[i]+"'><label>"+ objVal[i] +"</label></li>";
               }
               html += "</ul>";
-            } else {
+            }
+            else if (res[key].type === 'big_text') {
+              html += "<li><textarea rows='4' cols='50'></textarea></li>";
+            }
+            else {
               html += "<li>";
-              html += "<label>"+ res[key].name +"</label>";
               html += "<select>";
               for (var i in objVal) {
                 console.log(objVal[i])
@@ -63,46 +61,13 @@ App.buildForm = (function ($, win, doc) {
               html += "</select></li>";
               html += "</ul>";
             }
-
-            // if (res[key].allow_multiple_value) {
-            //   html += "<label>"+ res[key].name +"</label>";
-            // } else {
-            //   html += "<label>"+ res[key].name +"</label>";
-            //
-            // }
-            // var label = res.data[key];
-            // var mask = fullItem.id;
-            // var name = fullItem.currencyFormat;
-            // var placeholder = fullItem.price;
-            // var reference = fullItem.image;
-            // var required = fullItem.installments;
-            // var type = fullItem.price.toString().split(".")[0];
-            // var priceDecimal = fullItem.price.toString().split(".")[1];
-            // var title = fullItem.title;
-            // var availableSizes = fullItem.availableSizes;
-            //
-            // html += "<li class='item' data-id='"+idItem+"'>";
-            //   html += "<figure><img src='images/"+imagePath+"' alt='' /></figure>";
-            //   html += "<span class='item-title'>" + title + "</span>";
-            //   html += "<span class='wrap-hr'><hr></span>";
-            //   html +=  "<span class='item-price'>"+currencyFormat+"<b>"+priceBig+"</b>."+priceDecimal+"</span>"
-            //   html +=  "<span class='item-installment'>ou "+installments+"x de R$25,00</span>"
-            // html +=  "</li>";
           }
-        html +=  "</div>";
-        // debugger
-        // create a p element for inserting in el
-        var newEl = document.createElement('div');
-        newEl.innerHTML = html;
+        html +=  "<button type='button'>Buscar profissionais</button></div>";
 
-        // use the innerHTML property for inserting HTML content
-        // or append a textNode to the p element
-        // el.appendChild(html);
-        el.appendChild(newEl);
-
-
-        // el.insertBefore(html, null);
-        // $('.big-banner').append(html);
+        targetEl.innerHTML = html;
+    }
+    function buildUserFields (res){
+      console.log('ressss user', res)
     }
     function addEvent (el, type, handler){
       if (el.attachEvent) el.attachEvent('on'+type, handler); else el.addEventListener(type, handler);
