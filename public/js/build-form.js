@@ -10,10 +10,10 @@ App.buildForm = (function ($, win, doc) {
       addEvent(context || document, event, function(e) {
           var qs = (context || document).querySelectorAll(selector);
           if (qs) {
-              var el = e.target || e.srcElement, index = -1;
-              var dataEl = el.dataset.id;
-              while (el && ((index = Array.prototype.indexOf.call(qs, el)) === -1)) el = el.parentElement;
-              if (index > -1) callback.call(el, e, dataEl);
+            var el = e.target || e.srcElement, index = -1;
+            var dataEl = el.dataset.id;
+            while (el && ((index = Array.prototype.indexOf.call(qs, el)) === -1)) el = el.parentElement;
+            if (index > -1) callback.call(el, e, dataEl);
           }
       });
     }
@@ -35,6 +35,8 @@ App.buildForm = (function ($, win, doc) {
 
     }
     function buildRequestFields(res, targetEl) {
+
+        var fieldsetTarget = targetEl.querySelector('.request_fields');
         var html = "<div class='request-fields-list'>";
 
         for (var key in res) {
@@ -64,9 +66,25 @@ App.buildForm = (function ($, win, doc) {
           }
         html +=  "<button type='button'>Buscar profissionais</button></div>";
 
-        targetEl.innerHTML = html;
+        fieldsetTarget.innerHTML = html;
     }
-    function buildUserFields (res){
+    function buildUserFields (res, targetEl){
+      var fieldsetTarget = targetEl.querySelector('.user_fields');
+
+      var html = "<div class='request-fields-list'>";
+
+      for (var key in res) {
+        var objVal = res[key].values;
+          html += "<label class='name'>"+ res[key].name +"</label>";
+          html += "<ul class='request-list'>";
+          html += "<li>";
+          html += "<select>";
+
+          html += "</select></li>";
+        }
+        html += "</ul>";
+
+        fieldsetTarget.innerHTML = html;
       console.log('ressss user', res)
     }
     function addEvent (el, type, handler){
@@ -74,13 +92,6 @@ App.buildForm = (function ($, win, doc) {
     }
     function removeEvent (el, type, handler){
       if (el.attachEvent) el.attachEvent('on'+type, handler); else el.addEventListener(type, handler);
-    }
-    function ableBt () {
-      var addfavorite = doc.querySelectorAll('.addfavorite');
-
-      for (var i=0; i < addfavorite.length; i++){
-        addfavorite[i].disabled = false;
-      }
     }
     return {
       'setup': setup

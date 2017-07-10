@@ -175,3 +175,9 @@ textarea {
   background: #fff;
   color: #536e7b;
 }
+fieldset {
+  border: none;
+}
+.user_fields {
+  display: none;
+}
