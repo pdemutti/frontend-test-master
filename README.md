@@ -29,7 +29,7 @@ O primeiro passo será instalar as dependências do Node.js, usando npm. No dire
 ## Executando
    Para executar no servidor:
 
-    $ npm start
+> $ npm start
 
   Para acessar, entre em localhost, port 3001.
 
