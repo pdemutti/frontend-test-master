@@ -31,7 +31,7 @@ O primeiro passo será instalar as dependências do Node.js, usando npm. No dire
 
 > $ npm start
 
-  Para acessar, entre em localhost, port 3001.
+  Para acessar, entre em localhost, porta 3001.
 
 ## Estrutura
 
