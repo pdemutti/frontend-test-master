@@ -33,9 +33,107 @@ App.buildForm = (function ($, win, doc) {
       buildRequestFields(result._embedded.request_fields, targetEl);
       buildUserFields(result._embedded.user_fields, targetEl);
 
-    }
-    function buildRequestFields(res, targetEl) {
+      configForm();
 
+    }
+
+    function configForm() {
+      var form = document.getElementById('form-content');
+      var inputs = form.getElementsByTagName('input');
+      var selects = form.getElementsByTagName('select');
+      var searchButton = document.getElementById('search-button');
+      var i;
+      var input;
+      var select
+      var fieldsets = form.getElementsByTagName('fieldset');
+
+      for (i = 0; i < inputs.length; i ++) {
+        input = inputs[i];
+
+        addEvent(input, 'blur', validateField);
+        addEvent(input, 'change', validateField);
+      }
+
+      for (i = 0; i < selects.length; i ++) {
+        select = selects[i];
+
+        addEvent(select, 'blur', validateField);
+        addEvent(select, 'change', validateField);
+      }
+
+      addEvent(searchButton, 'click', function callbackValidation() {
+        for (i = 0; i < fieldsets[0].getElementsByTagName('input').length; i ++) {
+          input = fieldsets[0].getElementsByTagName('input')[i];
+
+          validateField({
+            target: input,
+          });
+        }
+
+        for (i = 0; i < fieldsets[0].getElementsByTagName('select').length; i ++) {
+          select = fieldsets[0].getElementsByTagName('select')[i];
+
+          validateField({
+            target: select,
+          });
+        }
+
+        if (form.getElementsByClassName('error').length === 0) {
+          fieldsets[0].setAttribute('class', 'hidden');
+          fieldsets[1].removeAttribute('class');
+        }
+      });
+    }
+
+    function validateField(e) {
+      var element = e.target;
+
+      if ((element.getAttribute('required') === 'true' || element.value.length > 0)
+        && element.getAttribute('type') === 'email'
+        && !/^.+@.+\..+$/.test(element.value)) {
+        showErrorMessage(element);
+      } else {
+        hideErrorMessage(element);
+      }
+
+      if (element.getAttribute('required') === 'true' && element.value.replace(/\s/g, '') === '') {
+        showErrorMessage(element);
+      } else {
+        hideErrorMessage(element);
+      }
+    }
+
+    function hideErrorMessage(element) {
+      var elementId = element.getAttribute('id');
+      var label = document.getElementById('label-' + elementId);
+
+      if (label) {
+        label.parentNode.removeChild(label);
+
+        element.removeAttribute('class');
+      }
+    }
+
+    function showErrorMessage(element) {
+      var label;
+      var message = element.getAttribute('data-message') ? element.getAttribute('data-message') : 'Preencha este campo corretamente';
+      var elementId = element.getAttribute('id');
+
+      if (document.getElementById('label-' + elementId)) return;
+
+      label = document.createElement('label');
+
+      label.setAttribute('for', elementId);
+      label.setAttribute('class', 'error');
+      label.setAttribute('id', 'label-' + elementId);
+      label.innerHTML = message;
+
+      element.setAttribute('class', 'error');
+
+      element.parentNode.appendChild(label);
+    }
+
+    function buildRequestFields(res, targetEl) {
         var fieldsetTarget = targetEl.querySelector('.request_fields');
         var html = "<div class='request-fields-list'>";
 
@@ -46,16 +144,17 @@ App.buildForm = (function ($, win, doc) {
             if(res[key].type === 'enumerable' && res[key].allow_multiple_value){
               for (var i in objVal) {
                 console.log(objVal[i])
-                html += "<li class='item'><input type='checkbox' name='"+res[key].name+"' id='Qual será o serviço?-0' value='"+objVal[i]+"'><label>"+ objVal[i] +"</label></li>";
+                html += "<li class='item'><input type='checkbox' required='"+res[key].required+"' name='"+res[key].name+"' id='Qual será o serviço?-0' value='"+objVal[i]+"'><label>"+ objVal[i] +"</label></li>";
               }
               html += "</ul>";
             }
-            else if (res[key].type === 'big_text') {
+            else if (res[key].type === 'textarea') {
               html += "<li><textarea rows='4' cols='50'></textarea></li>";
             }
             else {
               html += "<li>";
-              html += "<select>";
+              html += "<select required='true' id='select-"+[key]+"'>";
+              html += "<option placeholder='selecione' value=''>selecione</option>";
               for (var i in objVal) {
                 console.log(objVal[i])
                 html += "<option value='"+objVal[i]+"'>"+objVal[i]+"</option>";
@@ -64,25 +163,19 @@ App.buildForm = (function ($, win, doc) {
               html += "</ul>";
             }
           }
-        html +=  "<button type='button'>Buscar profissionais</button></div>";
+        html +=  "<button id='search-button' type='button'>Buscar profissionais</button></div>";
 
         fieldsetTarget.innerHTML = html;
     }
     function buildUserFields (res, targetEl){
       var fieldsetTarget = targetEl.querySelector('.user_fields');
 
-      var html = "<div class='request-fields-list'>";
-
+      var html = "<div class='user-fields-list'><p>Falta Pouco!</p><small>Preencha mais algumas informações para que os profissionais indicados possam entrar em contato.</small>";
       for (var key in res) {
         var objVal = res[key].values;
-          html += "<label class='name'>"+ res[key].name +"</label>";
-          html += "<ul class='request-list'>";
-          html += "<li>";
-          html += "<select>";
-
-          html += "</select></li>";
+          html += "<label class='name'>"+ res[key].label +"</label>";
+          html += "<input type='"+res[key].type+"' required='"+res[key].required+"' placeholder='"+res[key].placeholder+"'>";
         }
-        html += "</ul>";
 
         fieldsetTarget.innerHTML = html;
       console.log('ressss user', res)
