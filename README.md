@@ -41,5 +41,5 @@ The basic structure of this challenge is given in the following way:
 * `node_modules/` Contem as dependências via [NPM](https://www.npmjs.org/). Entretanto, o directorio não é versionado, é ignorado.
 * `public/` Contem todos os arquivos estáticos da applicação, este é o local onde ficam todos os arquivos do front-end.
 * `.gitignore` O arquivo .gitignore especifica intencionalmente os arquivos que deverão ser ignorados pelo git.
-* `package.json` Lista todos as dependências [Node.js](http://nodejs.org/) .
+* `package.json` Lista todas as dependências [Node.js](http://nodejs.org/) .
 * `README.md` Explicação de todo o funcionamento da aplicação.
