@@ -37,8 +37,8 @@ O primeiro passo será instalar as dependências do Node.js, usando npm. No dire
 
 A estrutura básica do desafio fica da seguinte maneira:
 
-* `frontend-test-master/`Contem todo o codigo fonte do desafio.
-* `node_modules/` Contem as dependências via [NPM](https://www.npmjs.org/). Entretanto, o directorio não é versionado, é ignorado.
+* `frontend-test-master/`Contem todo o código fonte do desafio.
+* `node_modules/` Contem as dependências via [NPM](https://www.npmjs.org/). Entretanto o diretório não é versionado, é ignorado.
 * `public/` Contem todos os arquivos estáticos da applicação, este é o local onde ficam todos os arquivos do front-end.
 * `.gitignore` O arquivo .gitignore especifica intencionalmente os arquivos que deverão ser ignorados pelo git.
 * `package.json` Lista todos as dependências [Node.js](http://nodejs.org/) .
