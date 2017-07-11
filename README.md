@@ -1,9 +1,12 @@
-# Pré-requisitos
+Desafio Front-End
+===================
+
+
+O desafio
+-------------
 
 Não é permitido o uso de nenhuma biblioteca ou framework externo. Tudo será feito com [Vanilla.js](http://vanilla-js.com/).
-
 Não utilize nenhuma biblioteca de CSS externa, mas você pode utilizar qualquer metodologia de arquitetura de código.
-
 Se preferir, o uso de Sass é liberado, contanto que seu uso seja justificável.
 
 O objetivo desse teste é avaliar:
@@ -12,13 +15,31 @@ O objetivo desse teste é avaliar:
 - uso e abuso das features das linguagens (HTML, CSS e JS);
 - uso de patterns;
 
-# Teste
+# Pré-requisitos
 
-Utilizando o JSON `fields.json` que está na raiz do repositório, renderizar o formulário de pedidos da forma que é exibido [aqui](https://www.getninjas.com.br/moda-e-beleza/cabeleireiros).
+Verifique se voce possui o Node.js instalado. Será usado para subir a aplicação e servir o JSON disponibilizado.
+* Node.js - [Download and install Node.js](https://nodejs.org/en/download/);
 
-# Informações adicionais
+Instalação rápida
 
-- No exemplo, na pergunta "Qual será o serviço", o último campo é um `input` do tipo `text`, para este exemplo não é necessário faze-lo. (só é preciso exibir os `checkbox`);
-- É necessário exibir a mensagem "este campo é requerido" para os marcados como `required: true`;
-- Campos do tipo `enumerable` podem ser tanto `checkbox` quanto `select`, o que diferencia um do outro é a opção `allow_multiple_value`, quando essa opção estiver como `true` é um campo do tipo `checkbox` quando estiver como `false` é do tipo `select`.;
-- O formulário não precisa fazer `POST`;
+O primeiro passo será instalar as dependências do Node.js, usando npm. No diretorio da aplicação, digite na **linha de comando**:
+
+> $ npm install:
+
+## Executando
+   Para executar no servidor:
+
+    $ npm start
+
+  Para acessar, entre em localhost, port 3001.
+
+## Structure
+
+The basic structure of this challenge is given in the following way:
+
+* `frontend-test-master/`Contem todo o codigo fonte do desafio.
+* `node_modules/` Contem as dependências via [NPM](https://www.npmjs.org/). Entretanto, o directorio não é versionado, é ignorado.
+* `public/` Contem todos os arquivos estáticos da applicação, este é o local onde ficam todos os arquivos do front-end.
+* `.gitignore` O arquivo .gitignore especifica intencionalmente os arquivos que deverão ser ignorados pelo git.
+* `package.json` Lista todos as dependências [Node.js](http://nodejs.org/) .
+* `README.md` Explicação de todo o funcionamento da aplicação.

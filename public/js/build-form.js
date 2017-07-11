@@ -1,22 +1,12 @@
 var App = App || {};
 
-App.buildForm = (function ($, win, doc) {
+App.buildForm = (function (win, doc) {
   'use strict';
 
     function setup () {
       getData('/schema-json', success);
     }
-    function live(selector, event, callback, context) {
-      addEvent(context || document, event, function(e) {
-          var qs = (context || document).querySelectorAll(selector);
-          if (qs) {
-            var el = e.target || e.srcElement, index = -1;
-            var dataEl = el.dataset.id;
-            while (el && ((index = Array.prototype.indexOf.call(qs, el)) === -1)) el = el.parentElement;
-            if (index > -1) callback.call(el, e, dataEl);
-          }
-      });
-    }
+
     function getData (url, success){
       var xhr = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
       xhr.open('GET', url);
@@ -27,6 +17,7 @@ App.buildForm = (function ($, win, doc) {
       xhr.send();
       return xhr;
     }
+
     function success (data){
       var targetEl = doc.getElementById('form-content');
       var result = JSON.parse(data);
@@ -34,14 +25,13 @@ App.buildForm = (function ($, win, doc) {
       buildUserFields(result._embedded.user_fields, targetEl);
 
       configForm();
-
     }
 
     function configForm() {
-      var form = document.getElementById('form-content');
-      var inputs = form.getElementsByTagName('input');
+      var form = doc.getElementById('form-content');
+      var inputs = doc.getElementsByTagName('input');
       var selects = form.getElementsByTagName('select');
-      var searchButton = document.getElementById('search-button');
+      var searchButton = doc.getElementById('search-button');
       var i;
       var input;
       var select
@@ -81,13 +71,21 @@ App.buildForm = (function ($, win, doc) {
         if (form.getElementsByClassName('error').length === 0) {
           fieldsets[0].setAttribute('class', 'hidden');
           fieldsets[1].removeAttribute('class');
+          var bread = doc.getElementsByClassName('step');
+
+          for (var i=0; i<bread.length; i++){
+            if (hasClass(bread[i], 'active')) {
+              removeClass(bread[i], 'active');
+              addClass(bread[bread.length-1], 'active');
+            }
+          }
         }
       });
     }
 
     function validateField(e) {
       var element = e.target;
-
+      
       if ((element.getAttribute('required') === 'true' || element.value.length > 0)
         && element.getAttribute('type') === 'email'
         && !/^.+@.+\..+$/.test(element.value)) {
@@ -105,7 +103,7 @@ App.buildForm = (function ($, win, doc) {
 
     function hideErrorMessage(element) {
       var elementId = element.getAttribute('id');
-      var label = document.getElementById('label-' + elementId);
+      var label = doc.getElementById('label-' + elementId);
 
       if (label) {
         label.parentNode.removeChild(label);
@@ -116,12 +114,12 @@ App.buildForm = (function ($, win, doc) {
 
     function showErrorMessage(element) {
       var label;
-      var message = element.getAttribute('data-message') ? element.getAttribute('data-message') : 'Preencha este campo corretamente';
+      var message = element.getAttribute('data-message') ? element.getAttribute('data-message') : 'Este campo é requerido';
       var elementId = element.getAttribute('id');
 
-      if (document.getElementById('label-' + elementId)) return;
+      if (doc.getElementById('label-' + elementId)) return;
 
-      label = document.createElement('label');
+      label = doc.createElement('label');
 
       label.setAttribute('for', elementId);
       label.setAttribute('class', 'error');
@@ -143,20 +141,18 @@ App.buildForm = (function ($, win, doc) {
             html += "<ul class='request-list'>";
             if(res[key].type === 'enumerable' && res[key].allow_multiple_value){
               for (var i in objVal) {
-                console.log(objVal[i])
-                html += "<li class='item'><input type='checkbox' required='"+res[key].required+"' name='"+res[key].name+"' id='Qual será o serviço?-0' value='"+objVal[i]+"'><label>"+ objVal[i] +"</label></li>";
+                html += "<li class='item'><input type='checkbox' required='"+res[key].required+"' name='"+res[key].name+"' id='checkbox-"+[i]+"' value='"+objVal[i]+"'><label for='checkbox-"+[i]+"'>"+ objVal[i] +"</label></li>";
               }
               html += "</ul>";
             }
             else if (res[key].type === 'textarea') {
-              html += "<li><textarea rows='4' cols='50'></textarea></li>";
+              html += "<li><textarea rows='4' cols='50' placeholder="+res[key].placeholder+"></textarea></li>";
             }
             else {
               html += "<li>";
               html += "<select required='true' id='select-"+[key]+"'>";
-              html += "<option placeholder='selecione' value=''>selecione</option>";
+              html += "<option placeholder='Selecione' value=''>Selecione</option>";
               for (var i in objVal) {
-                console.log(objVal[i])
                 html += "<option value='"+objVal[i]+"'>"+objVal[i]+"</option>";
               }
               html += "</select></li>";
@@ -167,28 +163,46 @@ App.buildForm = (function ($, win, doc) {
 
         fieldsetTarget.innerHTML = html;
     }
+
     function buildUserFields (res, targetEl){
       var fieldsetTarget = targetEl.querySelector('.user_fields');
 
-      var html = "<div class='user-fields-list'><p>Falta Pouco!</p><small>Preencha mais algumas informações para que os profissionais indicados possam entrar em contato.</small>";
+      var html = "<div class='user-fields-list'><p>Falta Pouco!</p><small>Preencha mais algumas informações para que os profissionais indicados possam entrar em contato.</small><ul>";
       for (var key in res) {
         var objVal = res[key].values;
-          html += "<label class='name'>"+ res[key].label +"</label>";
-          html += "<input type='"+res[key].type+"' required='"+res[key].required+"' placeholder='"+res[key].placeholder+"'>";
+          html += "<li><label class='name'>"+ res[key].label +"</label>";
+          html += "<input type='"+res[key].type+"' required='"+res[key].required+"' placeholder='"+res[key].placeholder+"'></li>";
         }
+        html += "</ul>";
+        html += "<button type='submit' >Finalizar</button>";
 
         fieldsetTarget.innerHTML = html;
-      console.log('ressss user', res)
     }
+
     function addEvent (el, type, handler){
       if (el.attachEvent) el.attachEvent('on'+type, handler); else el.addEventListener(type, handler);
     }
+
     function removeEvent (el, type, handler){
       if (el.attachEvent) el.attachEvent('on'+type, handler); else el.addEventListener(type, handler);
     }
+    function hasClass(el, className) {
+      return el.classList ? el.classList.contains(className) : new RegExp('\\b'+ className+'\\b').test(el.className);
+    }
+
+    function addClass(el, className) {
+      if (el.classList) el.classList.add(className);
+      else if (!hasClass(el, className)) el.className += ' ' + className;
+    }
+
+    function removeClass(el, className) {
+      if (el.classList) el.classList.remove(className);
+      else el.className = el.className.replace(new RegExp('\\b'+ className+'\\b', 'g'), '');
+    }
+
     return {
       'setup': setup
     };
 
-}(undefined, window, window.document));
+}(window, window.document));
 App.buildForm.setup();

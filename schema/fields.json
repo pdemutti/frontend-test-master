@@ -81,20 +81,20 @@
 		}, {
 			"name": "Informações Adicionais",
 			"label": "Informações Adicionais",
-			"type": "big_text",
+			"type": "textarea",
 			"placeholder": "Descreva o que você precisa",
 			"required": false
 		}],
 		"user_fields": [{
 			"name": "lat_lng",
 			"label": "Em que bairro será o serviço?",
-			"type": "lat_lng",
+			"type": "text",
 			"placeholder": "",
 			"required": true
 		}, {
 			"name": "name",
 			"label": "Nome",
-			"type": "small_text",
+			"type": "text",
 			"placeholder": "",
 			"required": true
 		}, {
@@ -106,7 +106,7 @@
 		}, {
 			"name": "phone",
 			"label": "Celular",
-			"type": "phone",
+			"type": "text",
 			"placeholder": "",
 			"required": true
 		}]
