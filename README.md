@@ -33,7 +33,7 @@ O primeiro passo será instalar as dependências do Node.js, usando npm. No dire
 
   Para acessar, entre em localhost, port 3001.
 
-## Structure
+## Estrutura
 
 A estrutura básica do desafio fica da seguinte maneira:
 
