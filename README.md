@@ -20,7 +20,7 @@ O objetivo desse teste é avaliar:
 Verifique se voce possui o Node.js instalado. Será usado para subir a aplicação e servir o JSON disponibilizado.
 * Node.js - [Download and install Node.js](https://nodejs.org/en/download/);
 
-## Instalação rápida
+Instalação rápida
 
 O primeiro passo será instalar as dependências do Node.js, usando npm. No diretorio da aplicação, digite na **linha de comando**:
 
@@ -29,17 +29,17 @@ O primeiro passo será instalar as dependências do Node.js, usando npm. No dire
 ## Executando
    Para executar no servidor:
 
-> $ npm start
+    $ npm start
 
   Para acessar, entre em localhost, port 3001.
 
 ## Structure
 
-The basic structure of this challenge is given in the following way:
+A estrutura básica do desafio fica da seguinte maneira:
 
 * `frontend-test-master/`Contem todo o codigo fonte do desafio.
 * `node_modules/` Contem as dependências via [NPM](https://www.npmjs.org/). Entretanto, o directorio não é versionado, é ignorado.
 * `public/` Contem todos os arquivos estáticos da applicação, este é o local onde ficam todos os arquivos do front-end.
 * `.gitignore` O arquivo .gitignore especifica intencionalmente os arquivos que deverão ser ignorados pelo git.
-* `package.json` Lista todas as dependências [Node.js](http://nodejs.org/) .
+* `package.json` Lista todos as dependências [Node.js](http://nodejs.org/) .
 * `README.md` Explicação de todo o funcionamento da aplicação.
