@@ -20,7 +20,7 @@ O objetivo desse teste é avaliar:
 Verifique se voce possui o Node.js instalado. Será usado para subir a aplicação e servir o JSON disponibilizado.
 * Node.js - [Download and install Node.js](https://nodejs.org/en/download/);
 
-Instalação rápida
+## Instalação rápida
 
 O primeiro passo será instalar as dependências do Node.js, usando npm. No diretorio da aplicação, digite na **linha de comando**:
 
@@ -29,7 +29,7 @@ O primeiro passo será instalar as dependências do Node.js, usando npm. No dire
 ## Executando
    Para executar no servidor:
 
-    $ npm start
+> $ npm start
 
   Para acessar, entre em localhost, port 3001.
 
